@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 15% 8%;
+    --foreground: 210 20% 92%;
+
+    --card: 230 15% 12%;
+    --card-foreground: 210 20% 92%;
+
+    --popover: 230 15% 12%;
+    --popover-foreground: 210 20% 92%;
+
+    --primary: 142 70% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 230 15% 16%;
+    --secondary-foreground: 210 20% 92%;
+
+    --muted: 230 12% 18%;
+    --muted-foreground: 215 12% 55%;
+
+    --accent: 265 70% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 230 12% 20%;
+    --input: 230 12% 20%;
+    --ring: 142 70% 45%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 230 15% 10%;
+    --sidebar-foreground: 210 20% 85%;
+    --sidebar-primary: 142 70% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 230 12% 18%;
+    --sidebar-accent-foreground: 210 20% 85%;
+    --sidebar-border: 230 12% 20%;
+    --sidebar-ring: 142 70% 45%;
+
+    /* Gaming tokens */
+    --neon-green: 142 70% 45%;
+    --neon-blue: 200 90% 50%;
+    --neon-purple: 265 70% 58%;
+    --neon-pink: 330 80% 55%;
+    --surface: 230 15% 12%;
+    --surface-hover: 230 12% 18%;
+    --text-secondary: 215 12% 55%;
+    --category-action: 0 75% 55%;
+    --category-adventure: 35 90% 52%;
+    --category-horror: 280 60% 50%;
+    --category-indie: 142 70% 45%;
+    --category-openworld: 200 90% 50%;
+    --category-simulation: 45 80% 55%;
+    --category-sports: 165 60% 45%;
+    --category-shooter: 0 0% 65%;
+    --category-strategy: 265 70% 58%;
+    --download-gradient: linear-gradient(135deg, hsl(142 70% 45%), hsl(200 90% 50%));
+  }
+
+  .dark {
+    --background: 230 15% 8%;
+    --foreground: 210 20% 92%;
+    --card: 230 15% 12%;
+    --card-foreground: 210 20% 92%;
+    --popover: 230 15% 12%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 142 70% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 230 15% 16%;
+    --secondary-foreground: 210 20% 92%;
+    --muted: 230 12% 18%;
+    --muted-foreground: 215 12% 55%;
+    --accent: 265 70% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 230 12% 20%;
+    --input: 230 12% 20%;
+    --ring: 142 70% 45%;
+    --surface: 230 15% 12%;
+    --surface-hover: 230 12% 18%;
+    --text-secondary: 215 12% 55%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Rajdhani', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    @apply font-bold tracking-tight text-foreground;
+  }
+}
+
+@layer components {
+  .prose-blog h2 {
+    @apply text-2xl font-bold mt-10 mb-4 text-foreground;
+  }
+  .prose-blog h3 {
+    @apply text-xl font-semibold mt-8 mb-3 text-foreground;
+  }
+  .prose-blog p {
+    @apply text-base leading-relaxed mb-5 text-foreground/85;
+    font-family: 'Inter', sans-serif;
+  }
+  .prose-blog ul, .prose-blog ol {
+    @apply mb-5 pl-6;
+  }
+  .prose-blog li {
+    @apply mb-2 text-foreground/85;
+    font-family: 'Inter', sans-serif;
+  }
+  .prose-blog ul li {
+    @apply list-disc;
+  }
+  .prose-blog ol li {
+    @apply list-decimal;
+  }
+  .prose-blog a {
+    @apply text-primary underline underline-offset-2 hover:text-primary/80 transition-colors;
+  }
+  .prose-blog blockquote {
+    @apply border-l-4 border-primary/30 pl-4 italic text-muted-foreground my-6;
+  }
+  .prose-blog code {
+    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+  .prose-blog pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto mb-5;
+  }
+  .prose-blog img {
+    @apply rounded-lg my-6 w-full;
+  }
+
+  .btn-download {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-lg px-8 py-4 text-lg font-bold text-white transition-all duration-300;
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(135deg, hsl(142 70% 45%), hsl(200 90% 50%));
+    box-shadow: 0 0 20px hsl(142 70% 45% / 0.3), 0 0 40px hsl(200 90% 50% / 0.15);
+  }
+  .btn-download:hover {
+    box-shadow: 0 0 30px hsl(142 70% 45% / 0.5), 0 0 60px hsl(200 90% 50% / 0.25);
+    transform: translateY(-2px);
+  }
+
+  .game-card {
+    @apply relative overflow-hidden rounded-lg border border-border bg-card transition-all duration-300;
+  }
+  .game-card:hover {
+    @apply border-primary/50;
+    box-shadow: 0 0 20px hsl(142 70% 45% / 0.15);
+    transform: translateY(-4px);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px hsl(142 70% 45% / 0.5), 0 0 20px hsl(142 70% 45% / 0.3);
+  }
+}
