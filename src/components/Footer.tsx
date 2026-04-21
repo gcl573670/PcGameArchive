@@ -27,7 +27,7 @@ const Footer = () => {
               <img 
                 src="https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/logos/pcgamearchive.png"
                 alt="TempoBet"
-                className="h-20 w-auto"
+                className="h-22 w-auto"
               />
             </Link>
             <p className="mt-2 text-sm text-muted-foreground">{t.footer.description}</p>
