@@ -25,8 +25,8 @@ const Footer = () => {
           <div>
             <Link to={langPrefix} className="flex items-center">
               <img 
-                src="https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/logos/pcgamearchive.png"
-                alt="TempoBet"
+                src=""
+                alt="PcGameArchive"
                 className="h-22 w-auto"
               />
             </Link>
