@@ -51,7 +51,7 @@ const CategoryPage = () => {
     }
     
     const url = `https://pcgamearchive.com/${lang}/${cat.slug}`;
-    const fullTitle = `${categoryName} - Download Free PC Games | TempoBet`;
+    const fullTitle = `${categoryName} - Download Free PC Games | PcGameArchive`;
     
     // Update document title
     document.title = fullTitle;
