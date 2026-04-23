@@ -43,8 +43,8 @@ const BlogPage = () => {
   return (
     <>
       <Helmet>
-        <title>Blog — TempoBet</title>
-        <meta name="description" content="Gaming news, tips, guides and more from TempoBet." />
+        <title>Blog — PcGameArchive</title>
+        <meta name="description" content="Gaming news, tips, guides and more from PcGameArchive." />
       </Helmet>
       <Header />
       <main className="container mx-auto max-w-7xl px-4 py-12">
