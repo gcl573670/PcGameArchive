@@ -35,7 +35,7 @@ const ContactPage = () => (
         <p>Email: <strong>dmca@pcgamearchive.com</strong></p>
 
         <h2>Business &amp; Advertising</h2>
-        <p>For advertising partnerships, sponsored listings, or press inquiries, please contact us at <strong>partnerships@tempobet.fun</strong>.</p>
+        <p>For advertising partnerships, sponsored listings, or press inquiries, please contact us at <strong>partnerships@pcgamearchive.com</strong>.</p>
 
         <h2>General Inquiries</h2>
         <p>For anything else, reach out at <strong>hello@pcgamearchive.com</strong> and we'll get back to you within 48 hours.</p>
