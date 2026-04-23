@@ -42,7 +42,7 @@ const DownloadRedirectPage = () => {
   return (
     <>
       <Helmet>
-        <title>{`Download ${gameName} - TempoBet`}</title>
+        <title>{`Download ${gameName} - PcGameArchive`}</title>
         <meta name="description" content={`Download ${gameName} for free. Your download will begin shortly.`} />
         <meta name="robots" content="noindex, follow" />
       </Helmet>
