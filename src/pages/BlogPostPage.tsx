@@ -39,7 +39,7 @@ const BlogPostPage = () => {
     const { frontmatter } = post;
     const url = `https://pcgamearchive.com/${lang}/blog/${slug}`;
     
-    document.title = `${frontmatter.title} - TempoBet Blog`;
+    document.title = `${frontmatter.title} - PcGameArchive Blog`;
     
     let metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
