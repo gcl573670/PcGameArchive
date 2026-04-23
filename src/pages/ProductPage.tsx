@@ -29,12 +29,12 @@ const ProductPage = () => {
   return (
     <>
       <Helmet>
-        <title>{product.name} — Pcgamearchive</title>
+        <title>{product.name} — PcGameArchive</title>
         <meta name="description" content={product.description} />
         <link rel="canonical" href={`https://pcgamearchive.com/${lang}/shop/${product.slug}`} />
-        <meta name="author" content="pcgamearchive" />
+        <meta name="author" content="PcGameArchive" />
 
-        <meta property="og:title" content={`${product.name} — Pcgamearchive`} />
+        <meta property="og:title" content={`${product.name} — PcGameArchive`} />
         <meta property="og:description" content={product.description} />
         <meta property="og:type" content="product" />
         <meta property="og:url" content={`https://pcgamearchive.com/${lang}/shop/${product.slug}`} />
@@ -43,7 +43,7 @@ const ProductPage = () => {
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@pcgamearchive" />
-        <meta name="twitter:title" content={`${product.name} — Pcgamearchive`} />
+        <meta name="twitter:title" content={`${product.name} — PcGameArchive`} />
         <meta name="twitter:description" content={product.description} />
         <meta name="twitter:image" content={product.image || "https://pcgamearchive.com/og-default.jpg"} />
 
