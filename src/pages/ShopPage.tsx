@@ -12,10 +12,10 @@ const ShopPage = () => {
   return (
     <>
       <Helmet>
-        <title>{t.common.shopTitle} — pcgamearchive</title>
+        <title>{t.common.shopTitle} — PcGameArchive</title>
         <meta name="description" content={t.common.shopSubtitle} />
         <link rel="canonical" href={`https://pcgamearchive.com/${lang}/shop`} />
-        <meta property="og:title" content={`${t.common.shopTitle} — TempoBet`} />
+        <meta property="og:title" content={`${t.common.shopTitle} — PcGameArchive`} />
         <meta property="og:description" content={t.common.shopSubtitle} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://pcgamearchive.com/${lang}/shop`} />
