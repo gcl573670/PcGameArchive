@@ -121,6 +121,17 @@ const CategoryPage = () => {
       canonical.setAttribute("href", url);
       document.head.appendChild(canonical);
     }
+
+    // ROBOTS META TAG
+    let robots = document.querySelector('meta[name="robots"]');
+    if (robots) {
+      robots.setAttribute("content", "index, follow");
+    } else {
+      robots = document.createElement("meta");
+      robots.setAttribute("name", "robots");
+      robots.setAttribute("content", "index, follow");
+      document.head.appendChild(robots);
+    }
     
     // Update OG URL
     let ogUrl = document.querySelector('meta[property="og:url"]');
