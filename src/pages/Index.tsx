@@ -97,10 +97,6 @@ const Index = () => {
           <div className="flex gap-8">
             {/* Main content */}
             <div className="min-w-0 flex-1">
-              {/* H1 Header for Home Page */}
-              <h1 className="mb-8 text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
-                PcGameArchive — Free PC Game Downloads
-              </h1>
 
               {/* Category filter */}
               <div className="mb-8 flex flex-wrap items-center gap-2">
