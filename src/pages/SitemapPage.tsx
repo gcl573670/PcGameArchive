@@ -65,7 +65,7 @@ const SitemapPage = () => {
   return (
     <>
       <Helmet>
-        <title>Sitemap - All Games & Blog Posts | PcGameArchive</title>
+        <title>Sitemap - All Games & Blog Posts </title>
         <meta name="description" content="Complete sitemap of all free PC games and blog posts available. Browse through game categories, find your next favorite game, and read our latest articles." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`https://pcgamearchive.com/${lang}/sitemap`} />
