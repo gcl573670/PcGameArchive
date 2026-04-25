@@ -97,6 +97,9 @@ const Index = () => {
           <div className="flex gap-8">
             {/* Main content */}
             <div className="min-w-0 flex-1">
+              <div className="min-w-0 flex-1">
+                {/* H1 Header for Home Page - Hidden */}
+                <h1 style={{ display: 'none' }}>PcGameArchive — Free PC Game Downloads</h1>
 
               {/* Category filter */}
               <div className="mb-8 flex flex-wrap items-center gap-2">
