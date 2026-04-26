@@ -3,7 +3,4 @@ Allow: /
 Disallow: /?*
 Disallow: /*?
 
-# AI Protection (Optional but recommended)
-Content-Signal: search=yes, ai-input=yes, ai-train=no
-
 Sitemap: https://pcgamearchive.com/sitemap_index.xml
