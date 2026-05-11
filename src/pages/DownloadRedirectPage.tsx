@@ -44,7 +44,7 @@ const DownloadRedirectPage = () => {
       <Helmet>
         <title>{`Download ${gameName} - PcGameArchive`}</title>
         <meta name="description" content={`Download ${gameName} for free. Your download will begin shortly.`} />
-        <meta name="robots" content="noindex, follow" />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <Header />
       <main className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-12">
