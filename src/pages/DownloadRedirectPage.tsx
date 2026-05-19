@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import AdSlot from "@/components/AdSlot";
 import { Download, Shield, Clock, ExternalLink } from "lucide-react";
 
-const COUNTDOWN_SECONDS = 15;
+const COUNTDOWN_SECONDS = 5;
 
 const DownloadRedirectPage = () => {
   const [searchParams] = useSearchParams();
