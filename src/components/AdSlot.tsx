@@ -16,13 +16,13 @@ const AdSlot = ({ className = "", type = "leaderboard" }: AdSlotProps) => {
   const getAdConfig = () => {
     switch (type) {
       case "leaderboard":
-        return { key: "xxxx", height: 90, width: 728 };
+        return { key: "98f1204cd792be3a0facc8f76af3e4db", height: 90, width: 728 };
       case "skyscraper":
-        return { key: "xxxx", height: 600, width: 160 };
+        return { key: "edcb16a97704b1ca0aae63caee548833", height: 600, width: 160 };
       case "rectangle":
-        return { key: "xxxx", height: 250, width: 300 };
+        return { key: "98f1204cd792be3a0facc8f76af3e4db", height: 250, width: 300 };
       default:
-        return { key: "xxxx", height: 90, width: 728 };
+        return { key: "98f1204cd792be3a0facc8f76af3e4db", height: 90, width: 728 };
     }
   };
 
