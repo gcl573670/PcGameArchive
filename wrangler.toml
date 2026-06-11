@@ -8,7 +8,7 @@ compatibility_flags = ["nodejs_compat"]
 # Then paste the id below
 [[kv_namespaces]]
 binding = "CACHE_KV"
-id = "YOUR_KV_NAMESPACE_ID_HERE"
+id = "30e6c3c9acb54e62a41f31f5d6af9fb7"
 
 # Environment variables
 [vars]
