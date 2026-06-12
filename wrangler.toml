@@ -1,0 +1,12 @@
+name = "pcgamearchive-worker"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+pages_build_output_dir = "dist"
+
+[[kv_namespaces]]
+binding = "CACHE_KV"
+id = "30e6c3c9acb54e62a41f31f5d6af9fb7"
+
+[vars]
+ENVIRONMENT = "production"
