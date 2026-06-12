@@ -27,6 +27,8 @@ const Header = () => {
             src="https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/logos/pcgamearchive2.png"
             alt="TempoBet"
             className="h-16 w-auto"
+            width="200"
+            height="64"
           />
         </Link>
 
@@ -43,35 +45,34 @@ const Header = () => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <SearchBar />
           <LanguageSwitcher />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-foreground lg:hidden"
-            aria-label="Toggle menu"
+            className="rounded-md p-2 text-muted-foreground hover:text-foreground lg:hidden"
           >
-            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="border-t border-border bg-background px-4 py-4 lg:hidden">
-          <div className="grid grid-cols-2 gap-2">
+        <div className="border-t border-border bg-background px-4 py-4 lg:hidden">
+          <nav className="flex flex-col gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.slug}
                 to={item.to}
                 onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
               >
                 {item.label}
               </Link>
             ))}
-          </div>
-        </nav>
+          </nav>
+        </div>
       )}
     </header>
   );
