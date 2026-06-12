@@ -1,62 +1,64 @@
-/**
- * Cloudflare Pages Worker - Cache API (no KV needed)
- * Uses built-in Cloudflare Cache API for edge caching
- */
-
-export async function onRequest(context) {
-  const { request, next } = context;
-
-  if (request.method !== 'GET') {
-    return next();
-  }
-
+@'export async function onRequest(context) {
+  const { request, env, waitUntil } = context;
   const url = new URL(request.url);
   const path = url.pathname;
 
-  // Cache JSON data (posts_json)
+  if (request.method !== 'GET') {
+    return env.ASSETS.fetch(request);
+  }
+
   if (path.startsWith('/posts_json/')) {
-    return handleCache(request, next, 'json', 3600);
+    return handleKV(context, path, 3600);
   }
 
-  // Cache sitemaps
   if (path.match(/^\/sitemap(_index|_[a-z]{2}_\d+)?\.xml$/)) {
-    return handleCache(request, next, 'sitemap', 86400);
+    return handleKV(context, path, 86400);
   }
 
-  // Cache robots.txt
   if (path === '/robots.txt') {
-    return handleCache(request, next, 'text', 3600);
+    return handleKV(context, path, 3600);
   }
 
-  // Everything else: pass through to Pages normally
-  return next();
+  return env.ASSETS.fetch(request);
 }
 
-async function handleCache(request, next, type, ttl) {
-  const cache = caches.default;
-  const cached = await cache.match(request);
+async function handleKV(context, path, ttl) {
+  const { request, env, waitUntil } = context;
 
-  if (cached) {
-    const response = new Response(cached.body, cached);
-    response.headers.set('X-Cache', 'HIT');
-    return response;
+  if (env.CACHE_KV) {
+    try {
+      const cached = await env.CACHE_KV.get(path);
+      if (cached) {
+        const mime = path.endsWith('.json') ? 'application/json' : path.endsWith('.xml') ? 'application/xml' : 'text/plain';
+        return new Response(cached, {
+          headers: {
+            'Content-Type': mime,
+            'Cache-Control': 'public, max-age=' + ttl,
+            'X-Cache': 'HIT-KV',
+          },
+        });
+      }
+    } catch (e) {}
   }
 
-  const response = await next();
+  const response = await env.ASSETS.fetch(request);
 
-  if (response.ok) {
-    const headers = new Headers(response.headers);
-    headers.set('Cache-Control', `public, max-age=${ttl}, stale-while-revalidate=${ttl * 24}`);
-    headers.set('X-Cache', 'MISS');
-
-    const cacheableResponse = new Response(response.body, {
-      status: response.status,
-      headers,
-    });
-
-    context.waitUntil(cache.put(request, cacheableResponse.clone()));
-    return cacheableResponse;
+  if (response.ok && env.CACHE_KV) {
+    try {
+      const body = await response.clone().text();
+      waitUntil(env.CACHE_KV.put(path, body, { expirationTtl: ttl * 2 }));
+    } catch (e) {}
   }
 
-  return response;
+  const mime = path.endsWith('.json') ? 'application/json' : path.endsWith('.xml') ? 'application/xml' : 'text/plain';
+  const headers = new Headers(response.headers);
+  headers.set('Cache-Control', 'public, max-age=' + ttl);
+  headers.set('Content-Type', mime);
+  headers.set('X-Cache', 'MISS');
+
+  return new Response(response.body, {
+    status: response.status,
+    headers,
+  });
 }
+'@ | Set-Content -LiteralPath "C:\Users\BEBO\Desktop\Site hosting Blog-tools\articles videos site files\tempobet\PcGameArchive-main\PcGameArchive-main\functions\[[catchall]].js"
