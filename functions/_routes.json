@@ -1,8 +1,5 @@
 {
   "version": 1,
-  "include": ["/*"],
-  "exclude": [
-    "/assets/*",
-    "/favicon.ico"
-  ]
+  "include": ["/posts_json/*"],
+  "exclude": []
 }
