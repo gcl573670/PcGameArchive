@@ -64,8 +64,8 @@ const AdSlot = ({ className = "", type = "leaderboard" }: AdSlotProps) => {
 
   return (
     <div 
-      className={`flex justify-center items-center overflow-hidden min-h-[90px] ${className}`}
-      style={{ minHeight: config.height }}
+      className={`flex justify-center items-center overflow-hidden ${className}`}
+      style={{ minHeight: config.height, width: config.width, maxWidth: '100%' }}
     >
       <div 
         ref={bannerRef}
