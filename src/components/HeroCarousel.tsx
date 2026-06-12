@@ -61,31 +61,15 @@ const HeroCarousel = ({ posts, maxSlides = 5 }: HeroCarouselProps) => {
     return slides.slice(0, maxSlides * 2); // Generate extra for variety
   }, [posts, maxSlides]);
   
-  // Rotate slides periodically to show different content
+  // Initialize slides once
   const [currentSlides, setCurrentSlides] = useState<CarouselSlide[]>([]);
   const [current, setCurrent] = useState(0);
   
-  // Initialize or refresh slides every 30 seconds
   useEffect(() => {
-    const refreshSlides = () => {
-      if (featuredSlides.length > 0) {
-        // Pick a new random set of slides
-        const shuffled = [...featuredSlides];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        setCurrentSlides(shuffled.slice(0, maxSlides));
-        setCurrent(0);
-      }
-    };
-    
-    refreshSlides();
-    
-    // Refresh carousel content every 30 seconds to show different games
-    const refreshInterval = setInterval(refreshSlides, 30000);
-    
-    return () => clearInterval(refreshInterval);
+    if (featuredSlides.length > 0) {
+      setCurrentSlides(featuredSlides.slice(0, maxSlides));
+      setCurrent(0);
+    }
   }, [featuredSlides, maxSlides]);
 
   const next = useCallback(() => {
@@ -116,6 +100,9 @@ const HeroCarousel = ({ posts, maxSlides = 5 }: HeroCarouselProps) => {
           alt={frontmatter.title}
           className="h-full w-full object-cover"
           loading="eager"
+          fetchPriority="high"
+          width="1920"
+          height="480"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
