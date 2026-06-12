@@ -1,64 +1,62 @@
+/**
+ * Cloudflare Pages Worker - Cache API (no KV needed)
+ * Uses built-in Cloudflare Cache API for edge caching
+ */
+
 export async function onRequest(context) {
-  const { request, env, waitUntil } = context;
+  const { request, next } = context;
+
+  if (request.method !== 'GET') {
+    return next();
+  }
+
   const url = new URL(request.url);
   const path = url.pathname;
 
-  if (request.method !== 'GET') {
-    return context.env.ASSETS.fetch(request);
-  }
-
+  // Cache JSON data (posts_json)
   if (path.startsWith('/posts_json/')) {
-    return handleKV(context, path, 3600);
+    return handleCache(request, next, 'json', 3600);
   }
 
+  // Cache sitemaps
   if (path.match(/^\/sitemap(_index|_[a-z]{2}_\d+)?\.xml$/)) {
-    return handleKV(context, path, 86400);
+    return handleCache(request, next, 'sitemap', 86400);
   }
 
+  // Cache robots.txt
   if (path === '/robots.txt') {
-    return handleKV(context, path, 3600);
+    return handleCache(request, next, 'text', 3600);
   }
 
-  return context.env.ASSETS.fetch(request);
+  // Everything else: pass through to Pages normally
+  return next();
 }
 
-async function handleKV(context, path, ttl) {
-  const { request, env, waitUntil } = context;
-  const cacheKey = path;
+async function handleCache(request, next, type, ttl) {
+  const cache = caches.default;
+  const cached = await cache.match(request);
 
-  if (env.CACHE_KV) {
-    try {
-      const cached = await env.CACHE_KV.get(cacheKey);
-      if (cached) {
-        const mime = path.endsWith('.json') ? 'application/json' : path.endsWith('.xml') ? 'application/xml' : 'text/plain';
-        return new Response(cached, {
-          headers: {
-            'Content-Type': mime,
-            'Cache-Control': 'public, max-age=' + ttl,
-            'X-Cache': 'HIT-KV',
-          },
-        });
-      }
-    } catch (e) {}
+  if (cached) {
+    const response = new Response(cached.body, cached);
+    response.headers.set('X-Cache', 'HIT');
+    return response;
   }
 
-  const response = await env.ASSETS.fetch(request);
+  const response = await next();
 
-  if (response.ok && env.CACHE_KV) {
-    try {
-      const body = await response.clone().text();
-      waitUntil(env.CACHE_KV.put(cacheKey, body, { expirationTtl: ttl * 2 }));
-    } catch (e) {}
+  if (response.ok) {
+    const headers = new Headers(response.headers);
+    headers.set('Cache-Control', `public, max-age=${ttl}, stale-while-revalidate=${ttl * 24}`);
+    headers.set('X-Cache', 'MISS');
+
+    const cacheableResponse = new Response(response.body, {
+      status: response.status,
+      headers,
+    });
+
+    context.waitUntil(cache.put(request, cacheableResponse.clone()));
+    return cacheableResponse;
   }
 
-  const mime = path.endsWith('.json') ? 'application/json' : path.endsWith('.xml') ? 'application/xml' : 'text/plain';
-  const headers = new Headers(response.headers);
-  headers.set('Cache-Control', 'public, max-age=' + ttl);
-  headers.set('Content-Type', mime);
-  headers.set('X-Cache', 'MISS');
-
-  return new Response(response.body, {
-    status: response.status,
-    headers,
-  });
+  return response;
 }
