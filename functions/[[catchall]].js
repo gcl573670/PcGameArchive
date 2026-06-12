@@ -1,10 +1,10 @@
-@'export async function onRequest(context) {
+export async function onRequest(context) {
   const { request, env, waitUntil } = context;
   const url = new URL(request.url);
   const path = url.pathname;
 
   if (request.method !== 'GET') {
-    return env.ASSETS.fetch(request);
+    return context.env.ASSETS.fetch(request);
   }
 
   if (path.startsWith('/posts_json/')) {
@@ -19,15 +19,16 @@
     return handleKV(context, path, 3600);
   }
 
-  return env.ASSETS.fetch(request);
+  return context.env.ASSETS.fetch(request);
 }
 
 async function handleKV(context, path, ttl) {
   const { request, env, waitUntil } = context;
+  const cacheKey = path;
 
   if (env.CACHE_KV) {
     try {
-      const cached = await env.CACHE_KV.get(path);
+      const cached = await env.CACHE_KV.get(cacheKey);
       if (cached) {
         const mime = path.endsWith('.json') ? 'application/json' : path.endsWith('.xml') ? 'application/xml' : 'text/plain';
         return new Response(cached, {
@@ -46,7 +47,7 @@ async function handleKV(context, path, ttl) {
   if (response.ok && env.CACHE_KV) {
     try {
       const body = await response.clone().text();
-      waitUntil(env.CACHE_KV.put(path, body, { expirationTtl: ttl * 2 }));
+      waitUntil(env.CACHE_KV.put(cacheKey, body, { expirationTtl: ttl * 2 }));
     } catch (e) {}
   }
 
@@ -61,4 +62,3 @@ async function handleKV(context, path, ttl) {
     headers,
   });
 }
-'@ | Set-Content -LiteralPath "C:\Users\BEBO\Desktop\Site hosting Blog-tools\articles videos site files\tempobet\PcGameArchive-main\PcGameArchive-main\functions\[[catchall]].js"
