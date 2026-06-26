@@ -27,38 +27,40 @@ const AdSlot = ({ className = "", type = "leaderboard" }: AdSlotProps) => {
   };
 
   useEffect(() => {
-    const config = getAdConfig();
+    if (!siteConfig.adsEnabled) return;
     
-    // Safety check: don't load if the ref isn't ready or already has content
-    if (bannerRef.current && !bannerRef.current.firstChild) {
-      const conf = document.createElement('script');
-      const script = document.createElement('script');
+    const timer = setTimeout(() => {
+      const config = getAdConfig();
       
-      script.type = 'text/javascript';
-      script.src = `https://www.highperformanceformat.com/${config.key}/invoke.js`;
-      
-      // We set atOptions directly on the window to ensure the script sees it
-      conf.innerHTML = `
-        atOptions = {
-          'key' : '${config.key}',
-          'format' : 'iframe',
-          'height' : ${config.height},
-          'width' : ${config.width},
-          'params' : {}
-        };
-      `;
+      if (bannerRef.current && !bannerRef.current.firstChild) {
+        const conf = document.createElement('script');
+        const script = document.createElement('script');
+        
+        script.type = 'text/javascript';
+        script.src = `https://www.highperformanceformat.com/${config.key}/invoke.js`;
+        
+        conf.innerHTML = `
+          atOptions = {
+            'key' : '${config.key}',
+            'format' : 'iframe',
+            'height' : ${config.height},
+            'width' : ${config.width},
+            'params' : {}
+          };
+        `;
 
-      bannerRef.current.append(conf);
-      bannerRef.current.append(script);
-    }
+        bannerRef.current.append(conf);
+        bannerRef.current.append(script);
+      }
+    }, 5000);
 
-    // Cleanup when component unmounts
     return () => {
+      clearTimeout(timer);
       if (bannerRef.current) {
         bannerRef.current.innerHTML = "";
       }
     };
-  }, [type]); // Re-run if type changes
+  }, [type]);
 
   const config = getAdConfig();
 

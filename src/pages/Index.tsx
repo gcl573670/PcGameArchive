@@ -11,7 +11,7 @@ import AdSlot from "@/components/AdSlot";
 import HeroCarousel from "@/components/HeroCarousel";
 import { TrendingUp, Clock, ChevronRight } from "lucide-react";
 
-const POSTS_PER_PAGE = 35;
+const POSTS_PER_PAGE = 20;
 
 const Index = () => {
   const { t, langPrefix, lang } = useLanguage();
@@ -57,12 +57,23 @@ const Index = () => {
     return (
       <>
         <Header />
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Loading games...</p>
+        <main>
+          <div className="h-[400px] md:h-[480px] bg-card animate-pulse" />
+          <div className="container mx-auto max-w-7xl px-4 py-12">
+            <div className="min-w-0 flex-1">
+              <div className="mb-8 flex gap-2">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="h-9 w-20 rounded-lg bg-card animate-pulse" />
+                ))}
+              </div>
+              <div className="grid gap-3 sm:gap-4 md:gap-5 lg:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                {[...Array(20)].map((_, i) => (
+                  <div key={i} className="aspect-[2/3] rounded-lg bg-card animate-pulse" />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </main>
         <Footer />
       </>
     );
@@ -131,7 +142,7 @@ const Index = () => {
               <h2 className="mb-6 text-2xl font-bold text-foreground">{t.common.latestPicks}</h2>
 
               {/* Games grid */}
-              <div className="grid gap-3 sm:gap-4 md:gap-5 lg:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
+              <div className="grid gap-3 sm:gap-4 md:gap-5 lg:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 2000px' }}>
                 {visiblePosts.map((post) => (
                   <PostCard key={post.slug} post={post} />
                 ))}
@@ -175,6 +186,8 @@ const Index = () => {
                             alt={post.frontmatter.title}
                             className="h-12 w-12 rounded-lg object-cover"
                             loading="lazy"
+                            width="48"
+                            height="48"
                           />
                         )}
                         <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors line-clamp-2">

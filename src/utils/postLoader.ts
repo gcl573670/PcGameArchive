@@ -201,10 +201,12 @@ export function getSeoCategoryDescription(categorySlug: string, language: string
 // Available categories
 const postCategories = ['action', 'adventure', 'horror', 'indie', 'openworld', 'shooter', 'simulation', 'sports', 'strategy'];
 
-// Cache for loaded posts
+// Cache for loaded posts (stripped of content for homepage)
 let postsByLanguageCache: Map<string, Post[]> = new Map();
+// Cache for full posts (with content, for post pages)
+let fullPostsByLanguageCache: Map<string, Post[]> = new Map();
 
-// Function to load all posts for a language
+// Function to load all posts for a language (stripped of content for homepage performance)
 export async function getAllPosts(language: string = 'en'): Promise<Post[]> {
   // Check cache first
   if (postsByLanguageCache.has(language)) {
@@ -212,24 +214,25 @@ export async function getAllPosts(language: string = 'en'): Promise<Post[]> {
   }
   
   try {
-    const allPosts: Post[] = [];
-    
-    // Load each category file
-    for (const category of postCategories) {
-      try {
-        // FIXED: Use correct path for Cloudflare Pages
+    // Load all category files in parallel
+    const results = await Promise.allSettled(
+      postCategories.map(async (category) => {
         const response = await fetch(`/posts_json/${language}/${category}.json`);
-        if (response.ok) {
-          const posts = await response.json();
-          const postsWithMeta = posts.map((post: Post) => ({
-            ...post,
-            language,
-            category
-          }));
-          allPosts.push(...postsWithMeta);
-        }
-      } catch (error) {
-        console.error(`Failed to load ${language}/${category}:`, error);
+        if (!response.ok) return [];
+        const posts = await response.json();
+        return posts.map((post: Post) => ({
+          ...post,
+          content: '',
+          language,
+          category
+        }));
+      })
+    );
+    
+    const allPosts: Post[] = [];
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        allPosts.push(...result.value);
       }
     }
     
@@ -265,28 +268,41 @@ export async function getPostsByCategory(language: string, category: string): Pr
   }
 }
 
-// Get single post by slug
+// Get single post by slug (loads only the needed category JSON)
 export async function getPostBySlug(slug: string, language: string = 'en'): Promise<Post | null> {
   try {
-    const allPosts = await getAllPosts(language);
-    const post = allPosts.find(p => p.slug === slug);
-    
-    if (!post) {
-      console.log(`Post not found: ${slug} in ${language}`);
-      return null;
+    // Try each category until we find the post
+    for (const category of postCategories) {
+      const response = await fetch(`/posts_json/${language}/${category}.json`);
+      if (!response.ok) continue;
+      const posts = await response.json();
+      const found = posts.find((p: Post) => p.slug === slug);
+      if (found) {
+        return { ...found, language, category };
+      }
     }
     
-    return post;
+    console.log(`Post not found: ${slug} in ${language}`);
+    return null;
   } catch (error) {
     console.error("Error in getPostBySlug:", error);
     return null;
   }
 }
 
-// Get related posts
+// Get related posts (loads only the needed category JSON)
 export async function getRelatedPosts(currentSlug: string, category: string, language: string = 'en', limit: number = 4): Promise<Post[]> {
-  const posts = await getPostsByCategory(language, category);
-  return posts.filter(p => p.slug !== currentSlug).slice(0, limit);
+  try {
+    const response = await fetch(`/posts_json/${language}/${category}.json`);
+    if (!response.ok) return [];
+    const posts = await response.json();
+    return posts
+      .filter((p: Post) => p.slug !== currentSlug)
+      .slice(0, limit)
+      .map((p: Post) => ({ ...p, language, category }));
+  } catch (error) {
+    return [];
+  }
 }
 
 // Extract headings from content

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { Post } from "@/types/post";
@@ -20,41 +20,34 @@ const HeroCarousel = ({ posts, maxSlides = 5 }: HeroCarouselProps) => {
   const featuredSlides = useMemo(() => {
     const slides: CarouselSlide[] = [];
     
-    const sampledGames = posts.slice(0, Math.min(100, posts.length));
-    
-    for (const post of sampledGames) {
+    for (let i = 0; i < Math.min(10, posts.length); i++) {
+      const post = posts[i];
       const { frontmatter } = post;
       
       if (frontmatter.screenshots && frontmatter.screenshots.length > 0) {
-        const screenshotsToUse = frontmatter.screenshots.slice(0, 2);
-        screenshotsToUse.forEach((screenshot) => {
-          slides.push({ image: screenshot, post });
-        });
+        slides.push({ image: frontmatter.screenshots[0], post });
       } else if (frontmatter.image) {
         slides.push({ image: frontmatter.image, post });
       }
       
-      if (slides.length >= maxSlides * 4) break;
+      if (slides.length >= maxSlides) break;
     }
     
-    for (let i = slides.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [slides[i], slides[j]] = [slides[j], slides[i]];
-    }
-    
-    return slides.slice(0, maxSlides * 2);
+    return slides;
   }, [posts, maxSlides]);
   
   // Initialize slides once
   const [currentSlides, setCurrentSlides] = useState<CarouselSlide[]>([]);
   const [current, setCurrent] = useState(0);
+  const initialized = useRef(false);
   
   useEffect(() => {
-    if (featuredSlides.length > 0) {
-      setCurrentSlides(featuredSlides.slice(0, maxSlides));
+    if (featuredSlides.length > 0 && !initialized.current) {
+      setCurrentSlides(featuredSlides);
       setCurrent(0);
+      initialized.current = true;
     }
-  }, [featuredSlides, maxSlides]);
+  }, [featuredSlides]);
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % currentSlides.length);
@@ -87,6 +80,7 @@ const HeroCarousel = ({ posts, maxSlides = 5 }: HeroCarouselProps) => {
           fetchPriority="high"
           width="1920"
           height="480"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />

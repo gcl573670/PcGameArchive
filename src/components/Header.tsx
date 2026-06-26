@@ -25,10 +25,11 @@ const Header = () => {
         <Link to={langPrefix} className="flex items-center">
           <img 
             src="https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/logos/pcgamearchive2.png"
-            alt="TempoBet"
-            className="h-16 w-auto"
+            alt="PcGameArchive"
+            className="h-10 w-auto"
             width="200"
-            height="64"
+            height="40"
+            fetchPriority="high"
           />
         </Link>
 
