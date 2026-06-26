@@ -1,8 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import LanguageLayout from "./i18n/LanguageLayout";
@@ -23,8 +20,6 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const SitemapPage = lazy(() => import("./pages/SitemapPage"));
 
-const queryClient = new QueryClient();
-
 const PageLoader = () => (
   <div className="flex justify-center items-center min-h-screen">
     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
@@ -33,11 +28,8 @@ const PageLoader = () => (
 
 const App = () => (
   <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+      <Sonner />
+      <BrowserRouter>
           <ScrollToTop />
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -61,9 +53,7 @@ const App = () => (
             </Routes>
           </Suspense>
         </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
+    </HelmetProvider>
 );
 
 export default App;

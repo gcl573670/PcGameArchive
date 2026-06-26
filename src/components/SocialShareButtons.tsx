@@ -1,6 +1,6 @@
 import { Facebook, Twitter, Send, Share2, Link, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 interface SocialShareButtonsProps {
   url: string;
@@ -9,7 +9,6 @@ interface SocialShareButtonsProps {
 }
 
 const SocialShareButtons = ({ url, title, description }: SocialShareButtonsProps) => {
-  const { toast } = useToast();
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
   const encodedDesc = encodeURIComponent(description || title);

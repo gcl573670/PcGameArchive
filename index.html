@@ -11,8 +11,8 @@
     <meta name="author" content="PcGameArchive" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
 
     <meta property="og:title" content="PcGameArchive — Free PC Game Downloads" />
     <meta property="og:description" content="Download the latest PC games. Action, Adventure, Horror, and more." />
@@ -44,7 +44,19 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script defer src="https://pl29211075.effectivecpmnetwork.com/d0/15/4b/d0154b793c28c12d51b48c2c31cdef76.js"></script>
-    <script defer src="https://pl29211079.effectivecpmnetwork.com/91/bc/2a/91bc2a5c9c6bd99989bbabfc4b178c0a.js"></script>
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var s1 = document.createElement('script');
+          s1.src = 'https://pl29211075.effectivecpmnetwork.com/d0/15/4b/d0154b793c28c12d51b48c2c31cdef76.js';
+          s1.defer = true;
+          document.body.appendChild(s1);
+          var s2 = document.createElement('script');
+          s2.src = 'https://pl29211079.effectivecpmnetwork.com/91/bc/2a/91bc2a5c9c6bd99989bbabfc4b178c0a.js';
+          s2.defer = true;
+          document.body.appendChild(s2);
+        }, 3000);
+      });
+    </script>
   </body>
 </html>
