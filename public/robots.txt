@@ -4,3 +4,15 @@ Disallow: /*/download
 Disallow: /*?
 
 Sitemap: https://pcgamearchive.com/sitemap_index.xml
+
+User-agent: GPTBot
+Allow: /
+Disallow: /*/download
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /*/download
+
+User-agent: CCBot
+Allow: /
+Disallow: /*/download

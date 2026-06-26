@@ -80,6 +80,7 @@ const Footer = () => {
               <li><Link to={`${langPrefix}/contact`} className="hover:text-primary transition-colors">{t.footer.contact}</Link></li>
               <li><Link to={`${langPrefix}/blog`} className="hover:text-primary transition-colors">Blog</Link></li>
               <li><Link to={`${langPrefix}/sitemap`} className="hover:text-primary transition-colors">Sitemap</Link></li>
+              <li><a href={`/rss/rss-${langPrefix.replace('/', '')}.xml`} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">{t.footer.rss}</a></li>
             </ul>
           </div>
         </div>

@@ -17,48 +17,32 @@ interface CarouselSlide {
 const HeroCarousel = ({ posts, maxSlides = 5 }: HeroCarouselProps) => {
   const { langPrefix } = useLanguage();
   
-  // Optimized: Only process up to 200 games max for performance
   const featuredSlides = useMemo(() => {
     const slides: CarouselSlide[] = [];
     
-    // Take a random sample of games first (max 200 to avoid performance issues)
-    const gamePool = [...posts];
-    for (let i = gamePool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [gamePool[i], gamePool[j]] = [gamePool[j], gamePool[i]];
-    }
+    const sampledGames = posts.slice(0, Math.min(100, posts.length));
     
-    // Use first 200 random games (or all if less than 200)
-    const sampledGames = gamePool.slice(0, Math.min(200, gamePool.length));
-    
-    // Collect screenshots from sampled games
     for (const post of sampledGames) {
       const { frontmatter } = post;
       
       if (frontmatter.screenshots && frontmatter.screenshots.length > 0) {
-        // Take only first 3 screenshots per game to keep slides manageable
-        const screenshotsToUse = frontmatter.screenshots.slice(0, 3);
+        const screenshotsToUse = frontmatter.screenshots.slice(0, 2);
         screenshotsToUse.forEach((screenshot) => {
-          slides.push({
-            image: screenshot,
-            post: post,
-          });
+          slides.push({ image: screenshot, post });
         });
       } else if (frontmatter.image) {
-        slides.push({
-          image: frontmatter.image,
-          post: post,
-        });
+        slides.push({ image: frontmatter.image, post });
       }
+      
+      if (slides.length >= maxSlides * 4) break;
     }
     
-    // Shuffle the final slides
     for (let i = slides.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [slides[i], slides[j]] = [slides[j], slides[i]];
     }
     
-    return slides.slice(0, maxSlides * 2); // Generate extra for variety
+    return slides.slice(0, maxSlides * 2);
   }, [posts, maxSlides]);
   
   // Initialize slides once
