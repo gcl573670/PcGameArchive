@@ -15,8 +15,9 @@ const SearchBar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Load all posts when component mounts or language changes
+  // Load all posts lazily when search is first opened
   useEffect(() => {
+    if (!open || allPosts.length > 0) return;
     async function loadPosts() {
       setLoading(true);
       try {
@@ -29,7 +30,7 @@ const SearchBar = () => {
       }
     }
     loadPosts();
-  }, [lang]);
+  }, [open, lang, allPosts.length]);
 
   const q = query.toLowerCase().trim();
 

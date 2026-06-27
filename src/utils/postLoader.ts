@@ -203,29 +203,33 @@ const postCategories = ['action', 'adventure', 'horror', 'indie', 'openworld', '
 
 // Cache for loaded posts (stripped of content for homepage)
 let postsByLanguageCache: Map<string, Post[]> = new Map();
-// Cache for full posts (with content, for post pages)
-let fullPostsByLanguageCache: Map<string, Post[]> = new Map();
+// Per-category cache to prevent duplicate fetches across getPostBySlug, getRelatedPosts, etc.
+const categoryCache: Map<string, Post[]> = new Map();
+
+function cacheKey(lang: string, cat: string) { return `${lang}/${cat}`; }
+
+async function fetchCategory(language: string, category: string): Promise<Post[]> {
+  const key = cacheKey(language, category);
+  if (categoryCache.has(key)) return categoryCache.get(key)!;
+  const response = await fetch(`/posts_json/${language}/${category}.json`);
+  if (!response.ok) { categoryCache.set(key, []); return []; }
+  const posts = await response.json();
+  const mapped = posts.map((post: Post) => ({ ...post, language, category }));
+  categoryCache.set(key, mapped);
+  return mapped;
+}
 
 // Function to load all posts for a language (stripped of content for homepage performance)
 export async function getAllPosts(language: string = 'en'): Promise<Post[]> {
-  // Check cache first
   if (postsByLanguageCache.has(language)) {
     return postsByLanguageCache.get(language)!;
   }
   
   try {
-    // Load all category files in parallel
     const results = await Promise.allSettled(
       postCategories.map(async (category) => {
-        const response = await fetch(`/posts_json/${language}/${category}.json`);
-        if (!response.ok) return [];
-        const posts = await response.json();
-        return posts.map((post: Post) => ({
-          ...post,
-          content: '',
-          language,
-          category
-        }));
+        const posts = await fetchCategory(language, category);
+        return posts.map((post: Post) => ({ ...post, content: '' }));
       })
     );
     
@@ -236,10 +240,8 @@ export async function getAllPosts(language: string = 'en'): Promise<Post[]> {
       }
     }
     
-    // Sort by date (newest first)
     allPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
     
-    // Cache the result
     postsByLanguageCache.set(language, allPosts);
     return allPosts;
   } catch (error) {
@@ -251,33 +253,21 @@ export async function getAllPosts(language: string = 'en'): Promise<Post[]> {
 // Get posts by category
 export async function getPostsByCategory(language: string, category: string): Promise<Post[]> {
   try {
-    // FIXED: Use correct path for Cloudflare Pages
-    const response = await fetch(`/posts_json/${language}/${category}.json`);
-    if (!response.ok) {
-      return [];
-    }
-    const posts = await response.json();
-    return posts.map((post: Post) => ({
-      ...post,
-      language,
-      category
-    }));
+    return await fetchCategory(language, category);
   } catch (error) {
     console.error(`Failed to load ${language}/${category}:`, error);
     return [];
   }
 }
 
-// Get single post by slug (loads categories in parallel)
+// Get single post by slug
 export async function getPostBySlug(slug: string, language: string = 'en'): Promise<Post | null> {
   try {
     const results = await Promise.allSettled(
       postCategories.map(async (category) => {
-        const response = await fetch(`/posts_json/${language}/${category}.json`);
-        if (!response.ok) return null;
-        const posts = await response.json();
+        const posts = await fetchCategory(language, category);
         const found = posts.find((p: Post) => p.slug === slug);
-        return found ? { ...found, language, category } : null;
+        return found || null;
       })
     );
 
@@ -295,16 +285,13 @@ export async function getPostBySlug(slug: string, language: string = 'en'): Prom
   }
 }
 
-// Get related posts (loads only the needed category JSON)
+// Get related posts
 export async function getRelatedPosts(currentSlug: string, category: string, language: string = 'en', limit: number = 4): Promise<Post[]> {
   try {
-    const response = await fetch(`/posts_json/${language}/${category}.json`);
-    if (!response.ok) return [];
-    const posts = await response.json();
+    const posts = await fetchCategory(language, category);
     return posts
       .filter((p: Post) => p.slug !== currentSlug)
-      .slice(0, limit)
-      .map((p: Post) => ({ ...p, language, category }));
+      .slice(0, limit);
   } catch (error) {
     return [];
   }
