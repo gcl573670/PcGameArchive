@@ -26,7 +26,7 @@ const Header = () => {
           <img 
             src="https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/logos/pcgamearchive2.png"
             alt="PcGameArchive"
-            className="h-10 w-auto"
+            className="h-14 w-auto"
             width="200"
             height="40"
             fetchPriority="high"
