@@ -6,7 +6,7 @@ import type { Post } from "@/types/post";
 import PostCard from "@/components/PostCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import HeroCarousel from "@/components/HeroCarousel";
+import HeroBanner from "@/components/HeroBanner";
 import { ChevronRight } from "lucide-react";
 
 const POSTS_PER_PAGE = 49;
@@ -246,7 +246,7 @@ const CategoryPage = () => {
     <>
       <Header />
       <main>
-        <HeroCarousel posts={allPosts} maxSlides={3} />
+        <HeroBanner posts={allPosts} />
         <section className="container mx-auto max-w-7xl px-4 py-12">
           <h1 className="mb-6 text-2xl font-bold text-foreground">
             {t.nav[cat.slug as keyof typeof t.nav] || cat.name}

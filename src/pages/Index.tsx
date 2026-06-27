@@ -8,7 +8,7 @@ import PostCard from "@/components/PostCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdSlot from "@/components/AdSlot";
-import HeroCarousel from "@/components/HeroCarousel";
+import HeroBanner from "@/components/HeroBanner";
 import { TrendingUp, Clock, ChevronRight } from "lucide-react";
 
 const POSTS_PER_PAGE = 20;
@@ -101,7 +101,7 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero Carousel */}
-        <HeroCarousel posts={posts} />
+        <HeroBanner posts={posts} />
 
         {/* Main content with sidebar */}
         <div className="container mx-auto max-w-7xl px-4 py-12">
