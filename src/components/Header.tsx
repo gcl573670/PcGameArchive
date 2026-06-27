@@ -24,7 +24,7 @@ const Header = () => {
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <Link to={langPrefix} className="flex items-center">
           <img 
-            src="https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/logos/pcgamearchive2.png"
+            src="https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/pcgamearchive2_75_3_96_1_94_1_86.webp"
             alt="PcGameArchive"
             className="h-14 w-auto"
             width="200"
