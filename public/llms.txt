@@ -1,0 +1,23 @@
+# PcGameArchive
+
+> Free PC game downloads. Browse thousands of games across Action, Adventure, Horror, Indie, Open World, Simulation, Sports, Shooter, and Strategy categories.
+
+## Site Information
+- **URL**: https://pcgamearchive.com
+- **Description**: Download the latest PC games for free. Browse by category, read reviews, and find system requirements.
+- **Languages**: 34 languages supported
+- **Content**: Game listings with descriptions, screenshots, system requirements, and download links
+
+## Navigation
+- Home: /en
+- Categories: /en/action, /en/adventure, /en/horror, /en/indie, /en/openworld, /en/shooter, /en/simulation, /en/sports, /en/strategy
+- Blog: /en/blog
+- About: /en/about
+- Contact: /en/contact
+- Privacy Policy: /en/privacy
+- Terms of Service: /en/terms
+- Sitemap: /en/sitemap
+
+## API / Data
+- RSS Feed: /rss/rss-en.xml
+- Sitemap: /sitemap_index.xml

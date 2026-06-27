@@ -14,9 +14,8 @@ const HeroBanner = ({ posts }: HeroBannerProps) => {
   const slide = useMemo(() => {
     if (posts.length === 0) return null;
     const post = posts[0];
-    const image = post.frontmatter.screenshots?.[0] || post.frontmatter.image;
-    if (!image) return null;
-    return { image, post };
+    if (!post.frontmatter.image) return null;
+    return { image: post.frontmatter.image, post };
   }, [posts]);
 
   if (!slide) return null;

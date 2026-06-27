@@ -52,6 +52,8 @@ const Header = () => {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="rounded-md p-2 text-muted-foreground hover:text-foreground lg:hidden"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
