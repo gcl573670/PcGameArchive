@@ -25,9 +25,7 @@ if (headMatch) {
     .trim();
 }
 
-const languages = readdirSync(postsJsonDir).filter(f => {
-  try { return readdirSync(join(postsJsonDir, f)).some(f2 => f2.endsWith('.json')); } catch { return false; }
-});
+const languages = ['en'];
 
 const categories = ['action', 'adventure', 'horror', 'indie', 'openworld', 'shooter', 'simulation', 'sports', 'strategy'];
 
