@@ -3,8 +3,9 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const distDir = join(__dirname, 'dist');
-const postsJsonDir = join(__dirname, 'public', 'posts_json');
+const rootDir = join(__dirname, '..');
+const distDir = join(rootDir, 'dist');
+const postsJsonDir = join(rootDir, 'public', 'posts_json');
 
 // Read the built index.html to extract script/css tags
 const builtIndexHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
