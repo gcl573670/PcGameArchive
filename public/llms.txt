@@ -1,23 +1,36 @@
 # PcGameArchive
 
-> Free PC game downloads. Browse thousands of games across Action, Adventure, Horror, Indie, Open World, Simulation, Sports, Shooter, and Strategy categories.
+PcGameArchive is a free PC game download website featuring thousands of games across multiple categories with detailed descriptions, system requirements, and screenshots.
 
-## Site Information
-- **URL**: https://pcgamearchive.com
-- **Description**: Download the latest PC games for free. Browse by category, read reviews, and find system requirements.
-- **Languages**: 34 languages supported
-- **Content**: Game listings with descriptions, screenshots, system requirements, and download links
+## Main Pages
 
-## Navigation
-- Home: /en
-- Categories: /en/action, /en/adventure, /en/horror, /en/indie, /en/openworld, /en/shooter, /en/simulation, /en/sports, /en/strategy
-- Blog: /en/blog
-- About: /en/about
-- Contact: /en/contact
-- Privacy Policy: /en/privacy
-- Terms of Service: /en/terms
-- Sitemap: /en/sitemap
+- [Home](https://pcgamearchive.com/en) - Browse all games
+- [Action Games](https://pcgamearchive.com/en/action) - Fast-paced combat and thrilling gameplay
+- [Adventure Games](https://pcgamearchive.com/en/adventure) - Story-driven exploration and puzzle-solving
+- [Horror Games](https://pcgamearchive.com/en/horror) - Terrifying survival and psychological horror
+- [Indie Games](https://pcgamearchive.com/en/indie) - Creative indie gems and unique experiences
+- [Open World Games](https://pcgamearchive.com/en/openworld) - Vast open worlds to explore freely
+- [Shooter Games](https://pcgamearchive.com/en/shooter) - FPS and TPS shooting action
+- [Simulation Games](https://pcgamearchive.com/en/simulation) - Realistic simulations and management games
+- [Sports Games](https://pcgamearchive.com/en/sports) - Sports and racing games
+- [Strategy Games](https://pcgamearchive.com/en/strategy) - Tactical and real-time strategy games
+- [Blog](https://pcgamearchive.com/en/blog) - Gaming news and articles
 
-## API / Data
-- RSS Feed: /rss/rss-en.xml
-- Sitemap: /sitemap_index.xml
+## Information Pages
+
+- [About](https://pcgamearchive.com/en/about) - About PcGameArchive
+- [Contact](https://pcgamearchive.com/en/contact) - Contact us
+- [Privacy Policy](https://pcgamearchive.com/en/privacy) - Privacy policy
+- [Terms of Service](https://pcgamearchive.com/en/terms) - Terms and conditions
+- [Sitemap](https://pcgamearchive.com/en/sitemap) - Full site sitemap
+
+## Data Feeds
+
+- [RSS Feed](https://pcgamearchive.com/rss/rss-en.xml) - Subscribe to game updates
+- [Sitemap Index](https://pcgamearchive.com/sitemap_index.xml) - XML sitemap for search engines
+
+## Site Details
+
+- Supports 34 languages
+- Games are organized by category: action, adventure, horror, indie, openworld, shooter, simulation, sports, strategy
+- Each game page includes: description, system requirements, screenshots, download links, and developer info

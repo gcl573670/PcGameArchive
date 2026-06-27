@@ -268,20 +268,25 @@ export async function getPostsByCategory(language: string, category: string): Pr
   }
 }
 
-// Get single post by slug (loads only the needed category JSON)
+// Get single post by slug (loads categories in parallel)
 export async function getPostBySlug(slug: string, language: string = 'en'): Promise<Post | null> {
   try {
-    // Try each category until we find the post
-    for (const category of postCategories) {
-      const response = await fetch(`/posts_json/${language}/${category}.json`);
-      if (!response.ok) continue;
-      const posts = await response.json();
-      const found = posts.find((p: Post) => p.slug === slug);
-      if (found) {
-        return { ...found, language, category };
+    const results = await Promise.allSettled(
+      postCategories.map(async (category) => {
+        const response = await fetch(`/posts_json/${language}/${category}.json`);
+        if (!response.ok) return null;
+        const posts = await response.json();
+        const found = posts.find((p: Post) => p.slug === slug);
+        return found ? { ...found, language, category } : null;
+      })
+    );
+
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value) {
+        return result.value;
       }
     }
-    
+
     console.log(`Post not found: ${slug} in ${language}`);
     return null;
   } catch (error) {

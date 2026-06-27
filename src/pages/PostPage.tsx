@@ -176,9 +176,22 @@ const PostPage = () => {
     return (
       <>
         <Header />
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-        </div>
+        <main>
+          <section className="relative overflow-hidden border-b border-border">
+            <div className="absolute inset-0 bg-card animate-pulse" />
+            <div className="container relative mx-auto max-w-7xl px-4 py-12">
+              <div className="flex flex-col gap-8 md:flex-row md:items-start">
+                <div className="w-full shrink-0 md:w-72 aspect-[3/4] rounded-xl bg-card animate-pulse" />
+                <div className="flex-1 space-y-4">
+                  <div className="h-4 w-48 bg-card animate-pulse rounded" />
+                  <div className="h-10 w-3/4 bg-card animate-pulse rounded" />
+                  <div className="h-6 w-full bg-card animate-pulse rounded" />
+                  <div className="h-6 w-2/3 bg-card animate-pulse rounded" />
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
         <Footer />
       </>
     );
@@ -233,6 +246,8 @@ const PostPage = () => {
                 src={frontmatter.image} 
                 alt="" 
                 className="h-full w-full object-cover opacity-20 blur-sm" 
+                width="1920"
+                height="480"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
             </div>
@@ -246,6 +261,10 @@ const PostPage = () => {
                     src={frontmatter.image}
                     alt={frontmatter.title}
                     className="w-full rounded-xl border border-border shadow-2xl"
+                    width="300"
+                    height="450"
+                    fetchPriority="high"
+                    decoding="async"
                   />
                 </div>
               )}

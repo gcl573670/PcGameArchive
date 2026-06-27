@@ -58,6 +58,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, className }) => {
               src={img.src}
               alt={img.alt || `Image ${i + 1}`}
               loading="lazy"
+              width="640"
+              height="360"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-foreground/0 transition-colors group-hover:bg-foreground/5" />
