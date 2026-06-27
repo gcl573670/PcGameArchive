@@ -32,8 +32,11 @@
     </style>
 
     <script>
-      window.addEventListener('load', function() {
-        setTimeout(function() {
+      (function() {
+        var loaded = false;
+        function loadGTM() {
+          if (loaded) return;
+          loaded = true;
           var s = document.createElement('script');
           s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JDKF09HDY4';
           s.async = true;
@@ -42,8 +45,18 @@
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-JDKF09HDY4');
-        }, 2000);
-      });
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadGTM, { timeout: 10000 });
+        } else {
+          window.addEventListener('load', function() {
+            setTimeout(loadGTM, 5000);
+          });
+        }
+        ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function(evt) {
+          window.addEventListener(evt, loadGTM, { once: true, passive: true });
+        });
+      })();
     </script>
     <meta name="yandex-verification" content="2b1f03eeb0624f16" />
     <meta name="msvalidate.01" content="A4813C0B37053DAE341214E3C5810351" />
@@ -55,8 +68,11 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      window.addEventListener('load', function() {
-        setTimeout(function() {
+      (function() {
+        var loaded = false;
+        function loadAds() {
+          if (loaded) return;
+          loaded = true;
           var s1 = document.createElement('script');
           s1.src = 'https://pl29211075.effectivecpmnetwork.com/d0/15/4b/d0154b793c28c12d51b48c2c31cdef76.js';
           s1.defer = true;
@@ -65,8 +81,15 @@
           s2.src = 'https://pl29211079.effectivecpmnetwork.com/91/bc/2a/91bc2a5c9c6bd99989bbabfc4b178c0a.js';
           s2.defer = true;
           document.body.appendChild(s2);
-        }, 3000);
-      });
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadAds, { timeout: 15000 });
+        } else {
+          window.addEventListener('load', function() {
+            setTimeout(loadAds, 8000);
+          });
+        }
+      })();
     </script>
   </body>
 </html>

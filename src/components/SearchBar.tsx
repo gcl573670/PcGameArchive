@@ -105,7 +105,7 @@ const SearchBar = () => {
             placeholder="Search games…"
             className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
           />
-          <button onClick={() => { setQuery(""); setOpen(false); }} className="text-muted-foreground hover:text-foreground">
+          <button onClick={() => { setQuery(""); setOpen(false); }} className="text-muted-foreground hover:text-foreground" aria-label="Close search">
             <X className="h-4 w-4" />
           </button>
         </div>
