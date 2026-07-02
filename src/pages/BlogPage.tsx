@@ -8,12 +8,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Calendar, User, ChevronRight } from "lucide-react";
 
+const POSTS_PER_PAGE = 30;
+
 const BlogPage = () => {
   const { t, langPrefix, lang } = useLanguage();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(30);
-  const postsPerPage = 30;
+  const [visibleCount, setVisibleCount] = useState(POSTS_PER_PAGE);
 
   useEffect(() => {
     async function loadPosts() {
@@ -29,13 +30,6 @@ const BlogPage = () => {
     loadPosts();
   }, [lang]);
 
-  const handleLoadMore = () => {
-    setVisibleCount(prev => prev + postsPerPage);
-  };
-
-  const visiblePosts = posts.slice(0, visibleCount);
-  const hasMorePosts = visibleCount < posts.length;
-
   if (loading) {
     return (
       <>
@@ -48,6 +42,9 @@ const BlogPage = () => {
       </>
     );
   }
+
+  const visiblePosts = posts.slice(0, visibleCount);
+  const hasMore = visibleCount < posts.length;
 
   return (
     <>
@@ -103,14 +100,14 @@ const BlogPage = () => {
                 </Link>
               ))}
             </div>
-            
-            {hasMorePosts && (
+            {hasMore && (
               <div className="mt-10 text-center">
                 <button
-                  onClick={handleLoadMore}
-                  className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                  onClick={() => setVisibleCount((c) => c + POSTS_PER_PAGE)}
+                  className="inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/10 px-8 py-3 text-sm font-bold text-primary transition-all hover:bg-primary/20 hover:shadow-[0_0_15px_hsl(var(--primary)/.2)]"
                 >
-                  Load More ({visibleCount} of {posts.length} shown)
+                  {t.common.loadMore}
+                  <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
             )}
