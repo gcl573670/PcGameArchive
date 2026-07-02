@@ -28,7 +28,7 @@ const blogPosts: BlogPost[] = [
       "title": "5 Hidden Details in the DOOM The Dark Ages Gameplay Reveal Trailer",
       "description": "The gaming world was set ablaze with the release of the DOOM The Dark Ages gameplay reveal trailer, promising a return to the franchise's brutal roots while",
       "date": "2026-07-02",
-      "image": "https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/games/r-ss1.webp",
+      "image": "https://pub-c17bac2473334bf1a31be4c8877715fc.r2.dev/games/army-of-ruin-ss2.webp",
       "author": "Game Enthusiast",
       "tags": [
         "action",
