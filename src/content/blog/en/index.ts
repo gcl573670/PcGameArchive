@@ -1,7 +1,7 @@
 import type { BlogPost } from '../../posts';
 
 const blogPosts: BlogPost[] = [
-        {
+          {
     "slug": "7-shocking-gta-6-map-leaks-that-change-everything-we-know",
     "frontmatter": {
       "title": "7 Shocking GTA 6 Map Leaks That Change Everything We Know",
