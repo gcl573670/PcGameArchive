@@ -12,6 +12,8 @@ const BlogPage = () => {
   const { t, langPrefix, lang } = useLanguage();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(30);
+  const postsPerPage = 30;
 
   useEffect(() => {
     async function loadPosts() {
@@ -26,6 +28,13 @@ const BlogPage = () => {
     }
     loadPosts();
   }, [lang]);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + postsPerPage);
+  };
+
+  const visiblePosts = posts.slice(0, visibleCount);
+  const hasMorePosts = visibleCount < posts.length;
 
   if (loading) {
     return (
@@ -54,45 +63,58 @@ const BlogPage = () => {
         {posts.length === 0 ? (
           <p className="py-12 text-center text-muted-foreground">No blog posts yet.</p>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                to={`${langPrefix}/blog/${post.slug}`}
-                className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg"
-              >
-                {post.frontmatter.image && (
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={post.frontmatter.image}
-                      alt={post.frontmatter.title}
-                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div className="p-5">
-                  <div className="mb-2 flex items-center gap-3 text-xs text-muted-foreground">
-                    {post.frontmatter.author && (
+          <>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {visiblePosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  to={`${langPrefix}/blog/${post.slug}`}
+                  className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg"
+                >
+                  {post.frontmatter.image && (
+                    <div className="aspect-video overflow-hidden">
+                      <img
+                        src={post.frontmatter.image}
+                        alt={post.frontmatter.title}
+                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5">
+                    <div className="mb-2 flex items-center gap-3 text-xs text-muted-foreground">
+                      {post.frontmatter.author && (
+                        <span className="flex items-center gap-1">
+                          <User className="h-3 w-3" /> {post.frontmatter.author}
+                        </span>
+                      )}
                       <span className="flex items-center gap-1">
-                        <User className="h-3 w-3" /> {post.frontmatter.author}
+                        <Calendar className="h-3 w-3" /> {post.frontmatter.date}
                       </span>
-                    )}
-                    <span className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3" /> {post.frontmatter.date}
+                    </div>
+                    <h2 className="mb-2 text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                      {post.frontmatter.title}
+                    </h2>
+                    <p className="text-sm text-muted-foreground line-clamp-3">{post.frontmatter.description}</p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                      Read more <ChevronRight className="h-3 w-3" />
                     </span>
                   </div>
-                  <h2 className="mb-2 text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
-                    {post.frontmatter.title}
-                  </h2>
-                  <p className="text-sm text-muted-foreground line-clamp-3">{post.frontmatter.description}</p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">
-                    Read more <ChevronRight className="h-3 w-3" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+            
+            {hasMorePosts && (
+              <div className="mt-10 text-center">
+                <button
+                  onClick={handleLoadMore}
+                  className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                >
+                  Load More ({visibleCount} of {posts.length} shown)
+                </button>
+              </div>
+            )}
+          </>
         )}
       </main>
       <Footer />
